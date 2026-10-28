@@ -21,7 +21,7 @@
             <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse" id="menu">
+            <div class="collapse navbar-collapse" id="menu">
                 <div class="navbar-nav me-auto">
                     <?php if ($u && $u['role'] == 'admin'): ?>
                         <a href="../admin/indexs.php" class="nav-link">DashBoard</a>

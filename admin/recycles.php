@@ -3,14 +3,6 @@
     head('จัดการรีไซเคิล');
     // require __DIR__ . '/../controllers/admin/'
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
     <div class="table-reponsive">
         <table id ="myTable" class="table table-stripped bg-white align-middle"> 
             <thead>
@@ -82,5 +74,3 @@
         });
         </script>
         <?php foot(); ?>
-</body>
-</html>

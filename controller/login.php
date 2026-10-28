@@ -1,6 +1,11 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Method not allowed');
+}
+
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 $stmt = $db->prepare('SELECT * FROM users WHERE email = ?');
@@ -11,6 +16,7 @@ $stmt->close();
 
 $passM = $u && password_verify($password, $u['password']);
 $lpassM = $u && hash_equals($u['password'], md5($password));
+
 if (!$u || (!$passM && !$lpassM)) {
     go('../login.php');
 }

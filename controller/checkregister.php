@@ -9,9 +9,6 @@ $password2 = $_POST['password2'] ?? '';
 $question = $_POST['question'] ?? '';
 $answer = trim($_POST['answer'] ?? '');
 
-if (strlen($password) < 8 || $password !== $password2) {
-    exit('รหัสผ่านไม่ถูกต้องหรือยืนยันรหัสผ่านไม่ตรงกัน');
-}
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 $answerHash = password_hash($answer, PASSWORD_DEFAULT);
 $stmt = $db->prepare('INSERT INTO users (name, email, phone, password, question, answer) VALUES (?, ?, ?, ?, ?, ?)');
