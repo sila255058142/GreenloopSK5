@@ -3,10 +3,6 @@
     head('จัดการเนื้อหา');
     if(!empty($_GET['edit'])){
 
-        $title = trim($_POST['title']?? '');
-        $body = trim($_POST['body']?? '');
-        $startAt = trim($_POST['start_at']?? '');
-        $endAt = trim($_POST['end_at']?? '');
         $id = $_GET['edit'];
 
         $select = $db->query("SELECT * FROM contents WHERE id = $id");

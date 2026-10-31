@@ -1,8 +1,6 @@
 <?php
 
-if (session_status() !== PHP_SESSION_ACTIVE) {
-    session_start();
-}
+session_start();
 
 require_once __DIR__ . '/conn/db.php';
 
@@ -33,5 +31,4 @@ function upload($field){
 
 
 }
-require_once __DIR__ . '/controller/layout.php';
 require_once __DIR__ . '/header.php';
