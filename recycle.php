@@ -1,0 +1,72 @@
+<?php
+require 'init.php';
+require __DIR__ . '/controller/recycle.php';
+head('รีไซเคิล');
+?>
+<div class="hero mb-4 d-flex justify-conent-between align-items-center">
+    <div>
+        <span class="small fw-bold text-uppercase opacity-75">Recycle &amp; Make a Different</span>
+        <p class="lead mb-1">🌳 คาร์บอลที่ลดได้ในปีนี้</p>
+        <div class="fs-1 lh-sm"><?= number_format($saved, 2)?><span>kgCo2e</span></div>
+        <p class="fs-1 lh-sm">ส่งต่อขยะ</p>
+    </div>
+    <div class="d-none d-mb-block fs-1 text-nonwrap" aria-hidden="true"📦 ✨ 🌿></div>
+</div>
+<form method="post" action="" enctype="multipart/form-date" class="card border-0 shadow-sm overflow-hidden mb-4">
+    <div class="row g-3">
+        <aside class="col-md-4 p-4 d-flex flex-column justify-content-center" style="background:#e8f5ee">
+            <div class="fs-1 mb-2" aria-hidden="true">♻️</div>
+            <span class="small fw-bold text-uppercase mb-1" style="color:#198754">Give it a new Life</span>
+            <h2 class="h4 fw=bold" style="color:#14532d">เริ่มต้นจากของชิ้นเล็กๆ</h2>
+            <p style="color:#3f6b52">แจ้งข้อมูลอุปกรณ์และน้ำหนักโดยประมาณทีมงานจะตรวจสอบก่อนยืนยันผลการรีไซเคิล</p>
+            <div class="rounded-3 px-3 py-2 bg-white fw-semibold" style="color:#14532d; border:1px sold #b7dfc7">✨ รับ 20 แต้มต่อขยะที่รีไซเคิลสำเร็จ 1 กก."</div>
+        </aside>
+        <div class="col-md-8 p-4">
+            <h5 class="fw-bold mb-1" id=recycle-form>แจ้งการรีไซเคิล</h5>
+            <p class="text-muted mb-3">กรอกข้อมูลอุปกรณ์ที่ต้องการรีไซเคิล</p>
+            <label for="" class="form-label">หมวดอุปกรณ์</label>
+            <select class="form-select mb-3" id="recycle-category" name="category_id" required>
+                <option value="">เลือกหมวด</option>
+                <?php foreach ($cats as $c): ?>
+                    <option value="<?= $c['id'] ?>" data-factor="<?= e($c['co2_per_kg'])?>">
+                        <?= e($c['name'])?> (ลด <?= $c['co2_per_kg']?> kgCO2e ต่อ กก.)
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <label for="" class="form-label mt-2">รายการ</label>
+                <input type="text" class="form-control" name="item_name" value="" require minlength="3">
+            <label for="" class="form-label mt-2">น้ำหนักโดยประมาณ (กก.)</label>
+                <input type="number" class="form-control" name="weight_kg" value="" require minlength="0.01" strp="0.01" id="recycle_weight">
+            <label for="" class="form-label mt-2">ประเภทการขนส่ง</label>
+            <select name="delivery_type" id="" class="form-select" required>
+                <option value="">เลือกประเภทการขนส่ง</option>
+                <option value="self">นำส่งเอง</option>
+                <option value="pickup">รับที่บ้าน</option>
+            </select>
+            <label for="" class="form-label mt-2">ที่อยู่สำหรับรับ</label>
+                <textarea name="address" id="" class="form-control" rows="3" maxlenght="500" required></textarea>
+            <div id="recycle-estimate" class="form-text text-success mb-3" aria-live="polite">เลือกหมวดและกรอกน้ำหนักเพื่อดูปริมาณคาร์บอนที่คาดว่าจะลด
+                <label for="" class="form-label mt-2">รูปสินค้า (ไม่บังคับ JPG PNG GIF ไม่เกิน 2MB)</label>
+                    <input type="file" class="form-control" name="image" value="" accept="image/*">
+                <button class="btn btn-success mt-3 px-4">ส่งคำขอ</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    const recycleCategory = document.getElementById('recycle-category');
+    const recycleWeight = document.getElementById('recycle-category');
+    const recycleEstimate = document.getElementById('recycle-category');
+    const updateRecycleEstimate = () => {
+        if (!factor || !weight || weight <= 0) {
+            recycleEstimate.textContent = 
+            'เลือกหมวดและกรอกน้ำหนักเพื่อดูปริมาณคาร์บอนที่คาดว่าจะลดได้';
+            return;
+        }
+        const estimate = new Intl.NumberFormat('th-TH', {minimumFractionDigits: 2}, recycleEstimate.textContent = 'คาดว่าจะได้ {$estimate} kgCO2e ผลลัพธ์ยืนยันหลังผูู้แลตรวจรับ)';)
+    };
+    recycleCategory.EventListener('change', updateRecycleEstimate);
+    recycleWeight.EventListener('input', updateRecycleEstimate);
+</script>
+
+<?php foot() ?>

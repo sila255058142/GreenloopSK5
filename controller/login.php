@@ -18,7 +18,7 @@ $passM = $u && password_verify($password, $u['password']);
 $lpassM = $u && hash_equals($u['password'], md5($password));
 
 if (!$u || (!$passM && !$lpassM)) {
-    go('../login.php');
+    go('../login.php' ,'รหัสไม่ถูกต้อง' ,'danger');
 }
 
 if ($lpassM) {
@@ -36,4 +36,4 @@ $_SESSION['role'] = $u['role'];
 unset($u['password'], $u['answer']);
 $_SESSION['user'] = $u;
 
-go($u['role'] === 'admin' ? '../admin/indexs.php' : '../index.php');
+go($u['role'] === 'admin' ? '../admin/index.php' : '../index.php' ,'เข้าสู่ระบบสำเร็จ');

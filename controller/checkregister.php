@@ -15,4 +15,4 @@ $stmt = $db->prepare('INSERT INTO users (name, email, phone, password, question,
 $stmt->bind_param('ssssss', $name, $email, $phone, $passwordHash, $question, $answerHash);
 $stmt->execute();
 
-go('../login.php');
+go('../login.php' , 'สมัครสมาชิกสำเร็จ' );

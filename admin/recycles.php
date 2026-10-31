@@ -1,10 +1,10 @@
 <?php 
     require '../init.php';
+    require __DIR__ . '/../controller/admin_recycle.php';
     head('จัดการรีไซเคิล');
-    // require __DIR__ . '/../controllers/admin/'
 ?>
-    <div class="table-reponsive">
-        <table id ="myTable" class="table table-stripped bg-white align-middle"> 
+    <div class="table-responsive">
+        <table id ="RecyTable" class="table table-stripped bg-white align-middle"> 
             <thead>
                 <tr>
                     <th>รูป</th>
@@ -43,14 +43,14 @@
                                     <?= $createdAt !== '' ? e(date('d/m/Y H:i', strtotime($createdAt))) : '-' ?>
                                 </td>
                                 <td><?= e($r['member'] ?? '')?></td>
-                                <td><?= e($r['item_menu'] ?? '')?></td>
+                                <td><?= e($r['item_name'] ?? '')?></td>
                                 <td><?= e($r['category'] ?? '')?></td>
                                 <td><?= e($r['weight_kg'] ?? '')?></td>
-                                <td><?= e(deliveryType($r[delivery_type] ?? ''))?></td>
-                                <td><?= nl2br(e($r['weight_kg'] ?? ''))?></td>
+                                <td><?= $r['delivery_type'] == 'pickup' ? 'นัดรับที่บ้าน' : 'นำส่งเอง'?></td>
+                                <td><?= nl2br(e($r['address'] ?? ''))?></td>
+                                <td><?= $r['status'] === 'pending' ? 'รอตรวจรับ' : ($r['status'] === 'done' ? 'สำเร็จ' : 'ปฏิเสธ')?></td>
                                 <td><?= e($r['points'] ?? '')?></td>
                                 <td><?= e($r['co2_kg'] ?? '')?></td>
-                                <td><?= e($r['weight_kg'] ?? '')?></td>
                                 <td>
                                     <?php if ($status === 'pending'): ?>
                                         <form method="post" class="d-flex gap-1">
@@ -67,10 +67,8 @@
         </table>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function ()   {
-            new DataTable('#recycleTable',(
-                order:[]
-            ));
-        });
+    $(document).ready(function () {
+        const table = $('#RecyTable').DataTable();
+    });
         </script>
         <?php foot(); ?>

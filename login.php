@@ -1,6 +1,6 @@
 <?php 
 require 'init.php';
-
+require 'controller/forgot.php';
 head('เข้าสู่ระบบ');
 ?>
 <div class="container p-4">
@@ -13,7 +13,7 @@ head('เข้าสู่ระบบ');
             เข้าสู่ระบบ
         </button>
         <div class="d-flex justify-content-between mt-3">
-            <a href="forget.php" class="">ลืมรหัสผ่าน</a>
+            <a href="forgot.php" class="">ลืมรหัสผ่าน</a>
             <a href="register.php" class="">สมัครสมาชิก</a>
         </div>
     </form>
