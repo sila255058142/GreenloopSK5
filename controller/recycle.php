@@ -16,9 +16,9 @@ if($_POST){
 
     $itemName = trim($_POST['item_name']?? '');
     $weight = trim($_POST['weight_kg']?? 0);
-    $deli = trim($_POST['delitery_type']?? '');
+    $deli = trim($_POST['delivery_type']?? '');
     $address = trim($_POST['address']?? '');
-    if (mb_strlen($itemName)< 3 || $weight <= 0 || !$cate){
+    if (mb_strlen($itemName)< 3 || $weight <= 0 || !$cate || !in_array($deli, ['self', 'pickup'], true)){
 
         go('recycle.php', 'ตรวจสอบข้อมูล' , 'danger');
     }
