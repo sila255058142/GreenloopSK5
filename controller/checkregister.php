@@ -11,8 +11,8 @@ $answer = trim($_POST['answer'] ?? '');
 
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 $answerHash = password_hash($answer, PASSWORD_DEFAULT);
-$stmt = $db->prepare('INSERT INTO users (name, email, phone, password, question, answer) VALUES (?, ?, ?, ?, ?, ?)');
-$stmt->bind_param('ssssss', $name, $email, $phone, $passwordHash, $question, $answerHash);
-$stmt->execute();
+
+$db->query("INSERT INTO users (name, email, phone, password, question, answer) 
+            VALUES ('$name', '$email', '$phone', '$passwordHash', '$question', '$answerHash')");
 
 go('../login.php' , 'สมัครสมาชิกสำเร็จ' );

@@ -1,18 +1,10 @@
 <?php
 require_once __DIR__ . '/../init.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit('Method not allowed');
-}
-
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
-$stmt = $db->prepare('SELECT * FROM users WHERE email = ?');
-$stmt->bind_param('s', $email);
-$stmt->execute();
-$u = $stmt->get_result()->fetch_assoc();
-$stmt->close();
+
+$u = $db->query("SELECT * FROM users WHERE email = '$email'")->fetch_assoc();
 
 $passM = $u && password_verify($password, $u['password']);
 $lpassM = $u && hash_equals($u['password'], md5($password));
@@ -23,10 +15,8 @@ if (!$u || (!$passM && !$lpassM)) {
 
 if ($lpassM) {
     $hash = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = $db->prepare('UPDATE users SET password = ? WHERE id = ?');
-    $stmt->bind_param('si', $hash, $u['id']);
-    $stmt->execute();
-    $stmt->close();
+    $userId = (int) $u['id'];
+    $db->query("UPDATE users SET password = '$hash' WHERE id = $userId");
 }
 
 session_regenerate_id(true);
