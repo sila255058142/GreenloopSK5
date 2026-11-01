@@ -12,6 +12,7 @@ $answer = trim($_POST['answer'] ?? '');
 $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 $answerHash = password_hash($answer, PASSWORD_DEFAULT);
 
+// เพิ่มบัญชีสมาชิกใหม่พร้อมบันทึกรหัสผ่านและคำตอบที่เข้ารหัสแล้ว
 $db->query("INSERT INTO users (name, email, phone, password, question, answer) 
             VALUES ('$name', '$email', '$phone', '$passwordHash', '$question', '$answerHash')");
 

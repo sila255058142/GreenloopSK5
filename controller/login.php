@@ -4,6 +4,7 @@ require_once __DIR__ . '/../init.php';
 $email = trim($_POST['email'] ?? '');
 $password = $_POST['password'] ?? '';
 
+// ดึงบัญชีผู้ใช้ตามอีเมลเพื่อนำไปตรวจสอบรหัสผ่านและสิทธิ์
 $u = $db->query("SELECT * FROM users WHERE email = '$email'")->fetch_assoc();
 
 $passM = $u && password_verify($password, $u['password']);
@@ -16,6 +17,7 @@ if (!$u || (!$passM && !$lpassM)) {
 if ($lpassM) {
     $hash = password_hash($password, PASSWORD_DEFAULT);
     $userId = (int) $u['id'];
+    // อัปเกรดรหัสผ่านรูปแบบ MD5 เป็น password_hash หลังล็อกอินสำเร็จ
     $db->query("UPDATE users SET password = '$hash' WHERE id = $userId");
 }
 

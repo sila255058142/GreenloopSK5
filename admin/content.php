@@ -5,6 +5,7 @@
 
         $id = $_GET['edit'];
 
+        // ดึงข้อมูลเนื้อหาตาม ID เพื่อแสดงในฟอร์มแก้ไข
         $select = $db->query("SELECT * FROM contents WHERE id = $id");
         $row = $select->fetch_assoc();
         
@@ -23,8 +24,8 @@
                 <input type="datetime-local" name="start_at" value="<?= e($local($row['start_at']))?>" class="form-control" required>
         </div>
         <div class="col-md-6">
-            <label for="" class="form-label mt-2">สิ้นสุดการแสดงผล (ไม่มีกำหนด = ว่าง)</label>
-                <input type="datetime-local" name="end_at" value="<?= e($local($row['end_at']))?>" class="form-control">
+            <label for="" class="form-label mt-2">สิ้นสุดการแสดงผล</label>
+                <input type="datetime-local" name="end_at" value="<?= e($local($row['end_at']))?>" class="form-control" required>
         </div>
         <input type="hidden" name ="Id" value="<?= $id ?>">
     </div>
@@ -57,7 +58,7 @@
                 <input type="datetime-local" name="start_at" value="<?= e($edit['start_at'])?>" class="form-control" required>
         </div>
         <div class="col-md-6">
-            <label for="" class="form-label mt-2">สิ้นสุดการแสดงผล (ไม่มีกำหนด = ว่าง)</label>
+            <label for="" class="form-label mt-2">สิ้นสุดการแสดงผล</label>
                 <input type="datetime-local" name="end_at" value="<?= e($edit['end_at'])?>" class="form-control" required>
         </div>
     </div>

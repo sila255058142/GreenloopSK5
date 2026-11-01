@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../init.php';
 if($_POST){
     $email = ($_POST['email']?? '');
+    // ดึงบัญชีผู้ใช้ตามอีเมลเพื่อตรวจคำถามและคำตอบสำหรับกู้รหัสผ่าน
     $u = $db->query("SELECT * FROM users WHERE email = '$email'")->fetch_assoc();
 
 
@@ -14,6 +15,7 @@ if($_POST){
      if ($pass1 !== $pass2) go('forgot.php' , 'รหัสผ่านไม่ตรง');
 
      $newHash = password_hash($pass1 , PASSWORD_DEFAULT);
+     // บันทึกรหัสผ่านใหม่ของบัญชีที่ยืนยันตัวตนแล้ว
      $db->query("UPDATE users SET password = '$newHash' WHERE id = {$u['id']}");
 
      go('login.php' , 'สำเร็จ');

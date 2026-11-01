@@ -49,7 +49,7 @@
                             🔔 <span class="badge bg-danger"></span>
                         </a>
                         <?php endif;?>
-                        <span class="navbar-text text-white mx-2">
+                        <span id="current-user-name" class="navbar-text text-white mx-2">
                             <?= e($u['name'])?>
                         </span>
                         <a href="logout.php" class="nav-link">ออกจากระบบ</a>
