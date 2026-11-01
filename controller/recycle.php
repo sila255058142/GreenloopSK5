@@ -24,7 +24,6 @@ if($_POST){
     }
 
     $image = upload('image');
-    $mCo2 = $weight * $cate['co2_per_kg'];
 
     // 1. บันทึกข้อมูลลงตาราง recycles แบบ query ตรงๆ
     $db->query("INSERT INTO recycles (user_id, category_id, item_name, weight_kg, image, delivery_type, address) 
@@ -32,19 +31,18 @@ if($_POST){
 
     $title = 'คำขอ';
     $message = trim($_POST['message'] ?? '');
-    $link = 'admin_recycles.php';
+    $link = 'admin/recycles.php';
 
-    // 2. บันทึกแจ้งเตือนชุดที่ 1 (แบบ query ตรงๆ ตามที่คุณเขียนเพิ่มมา)
     $db->query("INSERT INTO notifications (user_id, title, message, link) 
                 VALUES (NULL, '$title', '$message', '$link')");
-
-    // 3. บันทึกแจ้งเตือนชุดที่ 2 (เปลี่ยนจาก prepare มาเป็น query ตรงๆ)
-    $db->query("INSERT INTO notifications (user_id, title, message, link) 
-                VALUES (NULL, '$title', '$message', 'admin/status?status=pending')");
 
     go('recycle.php#recycle-form', 'ส่งคำ');
 }
 
 // ดึงยอดรวม CO2 เปลี่ยนมาใช้ query แบบสั้น
 $year = (int) date('Y');
-$saved = $db->query("SELECT COALESCE(SUM(co2_kg), 0) As total FROM recycles WHERE user_id = $uId AND status = 'done' AND YEAR(created_at) = $year")->fetch_assoc()['total'] ?? null;
+$saved = $db->query("SELECT COALESCE(SUM(co2_kg), 0) As total
+ FROM recycles WHERE user_id = $uId 
+ AND status = 'done' 
+ AND YEAR(created_at) = $year"
+ )->fetch_assoc()['total'] ?? null;

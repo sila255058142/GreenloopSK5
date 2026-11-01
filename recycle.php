@@ -12,7 +12,7 @@ head('รีไซเคิล');
     </div>
     <div class="d-none d-mb-block fs-1 text-nonwrap" aria-hidden="true"📦 ✨ 🌿></div>
 </div>
-<form method="post" action="" enctype="multipart/form-date" class="card border-0 shadow-sm overflow-hidden mb-4">
+<form method="post" action="" enctype="multipart/form-data" class="card border-0 shadow-sm overflow-hidden mb-4">
     <div class="row g-3">
         <aside class="col-md-4 p-4 d-flex flex-column justify-content-center" style="background:#e8f5ee">
             <div class="fs-1 mb-2" aria-hidden="true">♻️</div>
