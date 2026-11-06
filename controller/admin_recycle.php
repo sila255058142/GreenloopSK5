@@ -18,7 +18,6 @@ if ($_POST) {
     if (isset($_POST['rejected'])) {
         $db->query("UPDATE recycles SET status = 'rejected' WHERE id = $rId");
         $db->commit();
-        $db->query("INSERT INTO notifications (user_id, title, message, link) VALUES ({$r['user_id']}, 'คำขอ', '{$r['item_name']}', 'recycle.php')");
         go('recycles.php', 'ปฏิเสธเรียบร้อย', 'warning');
     }
 
