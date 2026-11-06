@@ -3,72 +3,55 @@
     require __DIR__ . '/../controller/admin_recycle.php';
     head('จัดการรีไซเคิล');
 ?>
-    <div class="table-responsive">
-        <table id ="RecyTable" class="table table-stripped bg-white align-middle"> 
-            <thead>
-                <tr>
-                    <th>รูป</th>
-                    <th>วันที่</th>
-                    <th>สมาชิก</th>
-                    <th>รายการ</th>
-                    <th>หมวด</th>
-                    <th>กก.</th>
-                    <th>ขนส่ง</th>
-                    <th>ที่อยู่</th>
-                    <th>สถานะ</th>
-                    <th>แต้ม</th>
-                    <th>CO2e ที่ลด</th>
-                    <th>ตรวจจับ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($rows as $r): ?>
-                    <?php 
-                        $id = $r['id'] ?? '';
-                        $image =$r['image'] ?? ''; 
-                        $createdAt =$r['created_at'] ?? ''; 
-                        $status =$r['status'] ?? ''; 
-                    ?>
-                        <tr>
-                            <td>
-                                <?php if ($image !== ''): ?>
-                                    <a href="../uploads/<?=e($image) ?>" target="_blank" rel="noopener">
-                                        <img src="../uploads/<?= e($image)?>" alt="รูปสินค้า" style="max-width:70px; max-height:56px; object-fit:cover;">
-                                    </a>
-                                <?php else: ?>
-                                    -
-                                <?php endif; ?>
-                            </td>
-                                <td data-order="<?= $createdAt !== '' ? strtotime($createdAt) : 0 ?>">
-                                    <?= $createdAt !== '' ? e(date('d/m/Y H:i', strtotime($createdAt))) : '-' ?>
-                                </td>
-                                <td><?= e($r['member'] ?? '')?></td>
-                                <td><?= e($r['item_name'] ?? '')?></td>
-                                <td><?= e($r['category'] ?? '')?></td>
-                                <td><?= e($r['weight_kg'] ?? '')?></td>
-                                <td><?= $r['delivery_type'] == 'pickup' ? 'นัดรับที่บ้าน' : 'นำส่งเอง'?></td>
-                                <td><?= nl2br(e($r['address'] ?? ''))?></td>
-                                <td><?= $r['status'] === 'pending' ? 'รอตรวจรับ' : ($r['status'] === 'done' ? 'สำเร็จ' : 'ปฏิเสธ')?></td>
-                                <td><?= e($r['points'] ?? '')?></td>
-                                <td><?= e($r['co2_kg'] ?? '')?></td>
-                                <td>
-                                    <?php if ($status === 'pending'): ?>
-                                        <form method="post" class="d-flex gap-1">
-                                            <input type="hidden" name="id" value="<?= e($id)?>">
-                                            <input type="number" name="weight_kg" value="<?= e($r['weight_kg']) ?? '' ?>">
-                                            <button class="btn btn-sm btn-success" type="submit">ตรวจรับ</button>
-                                            <button class="btn btn-sm btn-outline-danger" type="reject" formnovalidateonclick="return confirm('ปฏิเสธคำขอนี้?')">ปฏิเสธ</button>
-                                        </form>
-                                    <?php endif; ?>
-                                </td>
-                        </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <script>
-    $(document).ready(function () {
-        const table = $('#RecyTable').DataTable();
-    });
-        </script>
-        <?php foot(); ?>
+<div class="table-responsive">
+    <table id="RecyTable" class="table table-striped bg-white align-middle">
+        <thead>
+            <tr>
+                <th>สมาชิก</th>
+                <th>รูป</th>
+                <th>รายการ</th>
+                <th>ประเภทขนส่ง</th>
+                <th>ที่อยู่</th>
+                <th>กก.</th>
+                <th>สถานะ / จัดการ</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rows as $r): ?>
+            <tr>
+                <td><?= e($r['member']) ?></td>
+                <td>
+                    <?php if (!empty($r['image'])): ?>
+                        <a href="../uploads/<?= e($r['image']) ?>" target="_blank" rel="noopener">
+                            <img src="../uploads/<?= e($r['image']) ?>" alt="รูปสินค้า" style="max-width:70px; max-height:56px; object-fit:cover;">
+                        </a>
+                    <?php else: ?>
+                        -
+                    <?php endif; ?>
+                </td>
+                <td><?= e($r['item_name']) ?></td>
+                <td><?= $r['delivery_type'] === 'pickup' ? 'รับที่บ้าน' : 'นำส่งเอง' ?></td>
+                <td><?= nl2br(e($r['address'])) ?></td>
+                <td><?= e($r['weight_kg']) ?></td>
+                <td>
+                    <?php if ($r['status'] === 'pending'): ?>
+                        <form method="post" class="d-flex gap-1">
+                            <input type="hidden" name="id" value="<?= $r['id'] ?>">
+                            <button class="btn btn-sm btn-success" type="submit">รับ</button>
+                            <button class="btn btn-sm btn-outline-danger" type="submit" name="rejected" value="1" formnovalidate onclick="return confirm('ปฏิเสธคำขอนี้?')">ปฏิเสธ</button>
+                        </form>
+                    <?php else: ?>
+                        <span class="badge bg-<?= $r['status'] === 'done' ? 'success' : 'secondary' ?>">
+                            <?= $r['status'] === 'done' ? 'สำเร็จ' : 'ปฏิเสธ' ?>
+                        </span>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<script>
+$(document).ready(() => $('#RecyTable').DataTable());
+</script>
+<?php foot(); ?>

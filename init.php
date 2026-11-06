@@ -21,16 +21,21 @@ if($msg){
 
 function upload($field){
     $file = $_FILES[$field] ?? null;
-    if (!$file || empty($file['tmp_name'])){
+    if (!$file || ($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE){
         return '';
+    }
+    if (($file['error'] ?? UPLOAD_ERR_OK) !== UPLOAD_ERR_OK || empty($file['tmp_name'])){
+        return false;
     }
     $image = getimagesize($file['tmp_name']);
     if (!$image){
-        return '';
+        return false;
     }
 
     $directory = __DIR__ . '/uploads';
-    if (!is_dir($directory)) mkdir($directory, 0755, true);
+    if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)){
+        return false;
+    }
     $name = uniqid() . image_type_to_extension($image[2], true);
     return move_uploaded_file($file['tmp_name'], $directory . '/' . $name) ? $name : false;
 }

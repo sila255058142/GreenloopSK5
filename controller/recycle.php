@@ -25,18 +25,11 @@ if($_POST){
     }
 
     $image = upload('image');
+    if ($image === false) go('recycle.php', 'อัปโหลดรูปไม่สำเร็จ กรุณาลองใหม่', 'danger');
 
     // เพิ่มคำขอรีไซเคิลของสมาชิก พร้อมข้อมูลสิ่งของ น้ำหนัก รูป และการขนส่ง
     $db->query("INSERT INTO recycles (user_id, category_id, item_name, weight_kg, image, delivery_type, address) 
                 VALUES ($uId, $cateId, '$itemName', $weight, '$image', '$deli', '$address')");
-
-    $title = 'คำขอ';
-    $message = trim($_POST['message'] ?? '');
-    $link = 'admin/recycles.php';
-
-    // แจ้งเตือนส่วนกลางว่ามีคำขอรีไซเคิลใหม่
-    $db->query("INSERT INTO notifications (user_id, title, message, link) 
-                VALUES (NULL, '$title', '$message', '$link')");
 
     go('recycle.php#recycle-form', 'ส่งคำ');
 }

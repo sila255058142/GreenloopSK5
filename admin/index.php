@@ -33,10 +33,10 @@ require __DIR__ . '/../controller/admin_index.php';
         </div>
     </div>
     <div class="col-6 col-lg-3">
-        <div class="card card-body box text-center h-100 mb-0">
+        <a href="admin/notifications.php" class="card card-body box text-center h-100 mb-0 text-decoration-none">
             <small class="text-muted">🔔แจ้งเตือนที่ยังไม่อ่าน</small>
             <h4 class="text-success mb-0"><?= $unreadNotificationCount ?> คน</h4>
-        </div>
+        </a>
     </div>
     <div class="col-6 col-lg-3">
         <div class="card card-body box text-center h-100 mb-0">

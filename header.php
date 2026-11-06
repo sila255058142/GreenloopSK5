@@ -44,11 +44,11 @@
                         <a href="login.php" class="nav-link">เข้าสู่ระบบ</a>
                         <a href="register.php" class="nav-link">สมัครสมาชิก</a>
                     <?php else: ?>
-                        <?php if($u['role'] === 'user'):?>
-                        <a href="notifications.php" class="nav-link">
-                            🔔 <span class="badge bg-danger"></span>
-                        </a>
-                        <?php endif;?>
+                        <?php if ($u['role'] === 'admin'): ?>
+                            <a href="admin/notifications.php" class="nav-link" aria-label="การแจ้งเตือน">
+                                🔔 <span class="badge bg-danger"></span>
+                            </a>
+                        <?php endif; ?>
                         <span id="current-user-name" class="navbar-text text-white mx-2">
                             <?= e($u['name'])?>
                         </span>

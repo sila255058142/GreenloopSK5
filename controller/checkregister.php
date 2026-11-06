@@ -16,4 +16,8 @@ $answerHash = password_hash($answer, PASSWORD_DEFAULT);
 $db->query("INSERT INTO users (name, email, phone, password, question, answer) 
             VALUES ('$name', '$email', '$phone', '$passwordHash', '$question', '$answerHash')");
 
+$nameForNotification = $db->real_escape_string($name);
+$db->query("INSERT INTO notifications (user_id, title, message, link)
+            VALUES (NULL, 'สมาชิกใหม่', '$nameForNotification สมัครสมาชิกแล้ว', 'admin/users.php')");
+
 go('../login.php' , 'สมัครสมาชิกสำเร็จ' );
